@@ -1,11 +1,13 @@
 import React from 'react'
 import PostCard from './PostCard'
+import IPost from './types/PostInterface'
 
 type Props = {
-	isLargeScreen: boolean
+	isLargeScreen: boolean,
+	posts: Array<IPost>
 }
 
-const PostList = ({ isLargeScreen }: Props) => {
+const PostList = ({ isLargeScreen, posts }: Props) => {
 	const sampleData = [
 		{
 			title: "I combined two ideas into a game and it’s my new favorite thing.",
@@ -28,19 +30,22 @@ const PostList = ({ isLargeScreen }: Props) => {
 	]
 
   return (
-    <div className="w-full z-10 h-[300vh] bg-[#eeeeee] bg-opacity-90">
+    <div className="w-full z-10 h-[300vh] bg-[#eeeeee] bg-opacity-90 flex flex-col items-center lg:items-start">
+			{/* Top separator for small devices */}
+			{ !isLargeScreen && (<div className="h-[1px] w-[80vw] bg-black self-center mb-5"/>)}
+			
 			{/* Gutter top */}
 			{ isLargeScreen && <div className="hidden lg:block lg:sticky top-0 bg-gradient-to-b from-[rgba(238,238,238,1)] to-[rgba(238,238,238,0)] w-full h-[10vh]"/> }
 
 			{/* Post Card Content */}
 			<div className="w-full h-full flex flex-col gap-5 justify-start items-center max-w-3xl">
-				{ sampleData.map((post, index) => {
+				{ posts.map((post, index) => {
 					return (
 						<React.Fragment key={index}>
-							<div className="pl-[10%] pr-[15%]">
-								<PostCard title={post?.title} description={post?.description} tags={post?.tags} datePosted={post?.datePosted}/>
+							<div className="px-10 lg:pl-[10%] lg:pr-[15%]">
+								<PostCard post={post}/>
 							</div>
-							<hr className="border-t-[1px] border-black w-[90%]"/>
+							<hr className="border-t-[1px] border-black w-[80vw] lg:w-[90%]"/>
 						</React.Fragment>
 					)
 				})}

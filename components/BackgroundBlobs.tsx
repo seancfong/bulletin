@@ -11,11 +11,11 @@ const BackgroundBlobs = (props: Props) => {
 				<img src="svg/blobanimation3.svg" alt="blob 1" width={500} height={500}/>
 			</div>
 			{/* Blob 3 purple blue */}
-			<div className="absolute top-[35%] left-[10%] w-[280px] lg:w-[370px]">
+			<div className="absolute top-[35%] left-[10%] w-[280px] lg:w-[350px]">
 				<img src="svg/blobanimation2.svg" alt="blob 1" width={500} height={500}/>
 			</div>
 			{/* Blob 2 green yellow */}
-			<div className="absolute top-[8%] left-[0%] w-[240px] lg:w-[320px]">
+			<div className="absolute top-[8%] left-[0%] w-[240px] lg:w-[310px]">
 				<img src="svg/blobanimation1.svg" alt="blob 1" width={500} height={500}/>
 			</div>
 			

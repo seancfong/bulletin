@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
+
+// Components
 import BackgroundBlobs from './BackgroundBlobs'
 import BulletinTitle from './BulletinTitle'
 import PostList from './PostList'
 
+
 import useWindowSize from './hooks/useWindowSize'
+import IPost from './types/PostInterface'
 
-type Props = {}
+type Props = {
+	posts: Array<IPost>
+}
 
-const Headline = (props: Props) => {
+const Headline = ({ posts }: Props) => {
 	const windowSize = useWindowSize();
 
 	const [ renderOnLarge, setRenderOnLarge ] = useState(true);
@@ -36,14 +42,11 @@ const Headline = (props: Props) => {
 			</div>
 
 			{/* Section border */}
-				{ renderOnLarge
-					? (<div className="sticky top-[10vh] h-[80vh] w-[1px] bg-black"/>)
-					: (<div className="h-[1px] w-[80vw] bg-black self-center"/>)
-				}
+			{ renderOnLarge && <div className="sticky top-[10vh] h-[80vh] w-[1px] bg-black"/>}
 				
 			{/* right side: posts scroll */}
 			<div className="lg:w-1/2 z-10">			
-				<PostList isLargeScreen={renderOnLarge}/>
+				<PostList isLargeScreen={renderOnLarge} posts={posts}/>
 			</div>
     </div>
   )

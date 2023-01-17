@@ -39,10 +39,29 @@ export default {
             }
         },
         {
+            name: 'featuredImage',
+            title: 'Featured Image',
+            type: 'image',
+            options: {hotspot: true}
+        },
+        {
             title: 'Content', 
             name: 'content',
             type: 'array', 
-            of: [{type: 'block'}]
+            of: [
+                {
+                    type: 'block',
+                    title: 'Block',
+                },
+                {
+                    type: 'image',
+                    title: 'Image',
+                    options: {hotspot: true}
+                },
+								{
+									type: 'code'
+								}
+            ]
         },
         
     ]
