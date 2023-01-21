@@ -59,6 +59,7 @@ export default {
                     options: {hotspot: true}
                 },
 								{
+									title: 'Code input',
 									type: 'code'
 								}
             ]

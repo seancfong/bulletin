@@ -1,6 +1,8 @@
 import React from 'react'
 import { client, urlFor } from '../../lib/client'
 import { PortableText } from '@portabletext/react'
+import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import Navbar from '../../components/Navbar'
 
 interface PostDetails {
@@ -29,13 +31,28 @@ const ptComponents = {
         return null
       }
       return (
-        <img
-          alt={value.alt || ' '}
-          loading="lazy"
-          src={urlFor(value).width(320).height(240).fit('max').auto('format')}
-        />
+				<div>
+					<img
+						alt={value.alt || ' '}
+						loading="lazy"
+						src={urlFor(value).width(320).height(240).fit('max').auto('format')}
+						className="rounded-xl"
+					/>
+				</div>
       )
+				
+        
     },
+		code: ({ value }: any) => {
+			console.log(value)
+			return (
+				<div className="overflow-auto">
+					<SyntaxHighlighter language={value.language} style={ oneDark } className="codeScrollbar">
+						{value.code}
+					</SyntaxHighlighter>
+				</div>
+			)
+		}
   }
 }
 
@@ -57,7 +74,7 @@ const PostDetails = ({ post }: Props) => {
 			{/* Article content */}
 			<article className="flex flex-col items-center gap-5">
 				{/* Top half */}
-				<div className="max-w-7xl w-[90vw] flex flex-col gap-2">
+				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[55vw] flex flex-col gap-2">
 					{/* Date and Tags */}
 					<div className="flex gap-3 text-[#999999]">
 						<span>
@@ -75,23 +92,30 @@ const PostDetails = ({ post }: Props) => {
 
 					{/* Title and author */}
 					<h1 className="text-3xl">{title}</h1>
-					<span className="font-extralight">written by {'Sean Collan Fong'}</span>
+					<span className="font-light">written by {'Sean Collan Fong'}</span>
 				</div>
 
 				{/* Middle */}
-				<div className="max-w-7xl w-[90vw] flex flex-col gap-2">
+				<div className="max-w-6xl w-[90vw] md:w-[80vw] lg:w-[60vw] flex flex-col md:flex-row md:flex-[1_0] gap-5">
 					{/* Featured Image */}
-					<div className="aspect-square w-full h-full overflow-hidden">
-						<img src={urlFor(featuredImage)} alt={title ?? "Featured Image"} className="h-full w-full object-cover"/>
+					<div className="flex justify-center basis-[60%]">
+						<div className="aspect-square w-full max-w-2xl h-full overflow-hidden">
+							<img src={urlFor(featuredImage)} alt={title ?? "Featured Image"} className="h-full w-full object-cover rounded-xl"/>
+						</div>
 					</div>
 					
+					{/* Description */}
+					<div className="font-extralight italic basis-[40%]">
+						<p>{description}</p>
+					</div>
 				</div>
 
+				{/* Section separator */}
+				<div className="h-[1px] w-[80vw] md:w-[30vw] max-w-3xl bg-black self-center mb-5"/>
 
 				{/* Bottom half */}
-
 				{/* Content */}
-				<div className="max-w-7xl w-[90vw] flex flex-col gap-2">
+				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[55vw] flex flex-col gap-2">
 					<PortableText 
 						value={content}
 						components={ptComponents}
