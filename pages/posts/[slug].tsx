@@ -9,12 +9,12 @@ import Footer from '../../components/Footer';
 import Head from 'next/head';
 
 interface PostDetails {
-	title?: string,
-	description?: string,
-	datePosted?: string,
+	title?: string | undefined,
+	description?: string | undefined,
+	datePosted?: string | undefined,
 	content?: any,
 	featuredImage?: any,
-	tags?: Array<string>,
+	tags?: Array<string> | undefined,
 
 }
 
@@ -62,18 +62,18 @@ const ptComponents = {
 
 const PostDetails = ({ post, slug }: Props) => {
 	const { 
-		title = " ",
-		description = " ",
+		title,
+		description,
 		tags,
 		datePosted,
 		featuredImage,
 		content
-	} = post;
+	} = post ?? {};
 	
   return (
     <div className="w-full h-full min-h-screen bg-[#eeeeee] font-primary">	
 		<Head>
-			<title>{title}</title>
+			<title>{title ?? ""}</title>
 		</Head>
 			{/* Navbar */}
 			<Navbar />
