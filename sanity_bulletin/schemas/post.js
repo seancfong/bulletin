@@ -18,6 +18,11 @@ export default {
             }
         },
         {
+            name: 'isFeatured',
+            title: 'Featured?',
+            type: 'boolean',
+        },
+        {
             name: 'description',
             title: 'Description',
             type: 'text',
@@ -58,10 +63,10 @@ export default {
                     title: 'Image',
                     options: {hotspot: true}
                 },
-								{
-									title: 'Code input',
-									type: 'code'
-								}
+                {
+                    title: 'Code input',
+                    type: 'code'
+                }
             ]
         },
         
