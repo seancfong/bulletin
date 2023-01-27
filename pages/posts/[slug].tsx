@@ -4,6 +4,9 @@ import { PortableText } from '@portabletext/react'
 import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import Navbar from '../../components/Navbar'
+import { motion } from 'framer-motion';
+import Footer from '../../components/Footer';
+import Head from 'next/head';
 
 interface PostDetails {
 	title?: string,
@@ -11,11 +14,13 @@ interface PostDetails {
 	datePosted?: string,
 	content?: any,
 	featuredImage?: any,
-	tags?: Array<string>
+	tags?: Array<string>,
+
 }
 
 type Props = {
-	post: PostDetails
+	post: PostDetails,
+	slug: string
 }
 
 // Use custom image component to get URL from CMS
@@ -44,7 +49,6 @@ const ptComponents = {
         
     },
 		code: ({ value }: any) => {
-			console.log(value)
 			return (
 				<div className="overflow-auto">
 					<SyntaxHighlighter language={value.language} style={ oneDark } className="codeScrollbar">
@@ -56,7 +60,7 @@ const ptComponents = {
   }
 }
 
-const PostDetails = ({ post }: Props) => {
+const PostDetails = ({ post, slug }: Props) => {
 	const { 
 		title = " ",
 		description = " ",
@@ -67,16 +71,19 @@ const PostDetails = ({ post }: Props) => {
 	} = post;
 	
   return (
-    <div className="w-full h-full min-h-screen bg-[#eeeeee]">	
+    <div className="w-full h-full min-h-screen bg-[#eeeeee] font-primary">	
+		<Head>
+			<title>{title}</title>
+		</Head>
 			{/* Navbar */}
 			<Navbar />
 
 			{/* Article content */}
 			<article className="flex flex-col items-center gap-5">
 				{/* Top half */}
-				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[55vw] flex flex-col gap-2">
+				<div className="max-w-4xl w-[90vw] md:w-[70vw] lg:w-[50vw] flex flex-col gap-2">
 					{/* Date and Tags */}
-					<div className="flex gap-3 text-[#999999]">
+					<div className="flex gap-3 text-[#777777]">
 						<span>
 							{datePosted}
 						</span>
@@ -91,21 +98,23 @@ const PostDetails = ({ post }: Props) => {
 					</div>
 
 					{/* Title and author */}
-					<h1 className="text-3xl">{title}</h1>
-					<span className="font-light">written by {'Sean Collan Fong'}</span>
+					<motion.h3 layout="position" layoutId={slug} className="text-3xl md:text-4xl xl:text-5xl">{title}</motion.h3>
+					<span className="font-light text-lg">written by {'Sean Collan Fong'}</span>
 				</div>
 
 				{/* Middle */}
 				<div className="max-w-6xl w-[90vw] md:w-[80vw] lg:w-[60vw] flex flex-col md:flex-row md:flex-[1_0] gap-5">
 					{/* Featured Image */}
 					<div className="flex justify-center basis-[60%]">
-						<div className="aspect-square w-full max-w-2xl h-full overflow-hidden">
-							<img src={urlFor(featuredImage)} alt={title ?? "Featured Image"} className="h-full w-full object-cover rounded-xl"/>
+						<div className="aspect-square w-full max-w-2xl h-full rounded-xl">
+							<motion.img src={urlFor(featuredImage)} alt={title ?? "Featured Image"} className="h-full w-full object-cover rounded-xl" width={1024} height={1024}
+							whileHover={{ scale: 1.01, transition: { duration: 0.8, ease: "easeOut" } }}
+							transition={{ duration: 0.5, ease: "easeOut" }} layoutId="hoverImage"/>
 						</div>
 					</div>
 					
 					{/* Description */}
-					<div className="font-extralight italic basis-[40%]">
+					<div className="font-light italic basis-[40%] text-lg">
 						<p>{description}</p>
 					</div>
 				</div>
@@ -115,7 +124,7 @@ const PostDetails = ({ post }: Props) => {
 
 				{/* Bottom half */}
 				{/* Content */}
-				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[55vw] flex flex-col gap-2">
+				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[50vw] flex flex-col gap-2 text-lg">
 					<PortableText 
 						value={content}
 						components={ptComponents}
@@ -124,6 +133,7 @@ const PostDetails = ({ post }: Props) => {
 				
 			</article>
 			
+		<Footer />
     </div>
   )
 }
@@ -143,13 +153,13 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ( context: any ) => {
 	const { slug = " " } = context.params;
 	const query = `*[_type == 'post' && slug.current == $slug][0] {
-		title, description, content, tags, slug, datePosted, featuredImage, _id
+		title, description, content, tags, datePosted, featuredImage, _id
 	}`;
 
 	const post = await client.fetch(query, { slug });
 
 	return {
-		props: { post }
+		props: { post, slug }
 	}
 }
 

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 type Props = {}
@@ -5,7 +6,10 @@ type Props = {}
 const Navbar = (props: Props) => {
   return (
     <div className="w-full h-[10vh] flex items-center px-[5vw]">
-			<h2 className="text-2xl font-extralight">the bulletin</h2>
+      <Link href="/">
+        <h2 className="text-2xl font-extralight">the bulletin</h2>
+      </Link>
+			
     </div>
   )
 }

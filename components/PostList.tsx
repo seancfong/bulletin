@@ -1,19 +1,21 @@
 import React from 'react'
 import PostCard from './PostCard'
 import IPost from './types/PostInterface'
+import { urlFor } from '../lib/client'
 
 type Props = {
 	isLargeScreen: boolean,
-	posts: Array<IPost>
+	posts: Array<IPost>,
+	hoverController: any
 }
 
-const PostList = ({ isLargeScreen, posts }: Props) => {
+const PostList = ({ isLargeScreen, posts, hoverController }: Props) => {
 	const sampleData = [
 		{
 			title: "I combined two ideas into a game and it’s my new favorite thing.",
 			description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type",
 			tags: ["webdev", "portfolio"],
-			datePosted: "01/16/23"
+			datePosted: "01/16/23",
 		},
 		{
 			title: "I followed the trend of using AI to create artwork for a website. It was phenomenal.",
@@ -30,7 +32,7 @@ const PostList = ({ isLargeScreen, posts }: Props) => {
 	]
 
   return (
-    <div className="w-full z-10 h-[300vh] bg-[#eeeeee] bg-opacity-90 flex flex-col items-center lg:items-start">
+    <div className="w-full z-10 bg-[#eeeeee] bg-opacity-90 flex flex-col items-center lg:items-start">
 			{/* Top separator for small devices */}
 			{ !isLargeScreen && (<div className="h-[1px] w-[80vw] bg-black self-center mb-5"/>)}
 			
@@ -42,8 +44,10 @@ const PostList = ({ isLargeScreen, posts }: Props) => {
 				{ posts.map((post, index) => {
 					return (
 						<React.Fragment key={index}>
-							<div className="px-10 lg:pl-[10%] lg:pr-[15%]">
-								<PostCard post={post}/>
+							<div className="px-10 lg:pl-[10%] lg:pr-[15%] relative"
+							>
+								<PostCard post={post} hoverController={hoverController} isLargeScreen={isLargeScreen}/>
+								
 							</div>
 							<hr className="border-t-[1px] border-black w-[80vw] lg:w-[90%]"/>
 						</React.Fragment>

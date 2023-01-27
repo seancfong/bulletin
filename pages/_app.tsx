@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import '../styles/App.css'
+import '../styles/patterns.css'
 import type { AppProps } from 'next/app'
 import { Inter } from '@next/font/google'
 
@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     `}
     </style>
     <Component {...pageProps} />
+    
   </>
   )
 }
