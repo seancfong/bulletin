@@ -1,20 +1,31 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { urlFor } from '../lib/client'
 import IPost from './types/PostInterface'
+import { RxArrowTopRight } from 'react-icons/rx'
 
 type Props = {
 	post: IPost,
 	hoverController: any,
-	isLargeScreen: boolean
+	isLargeScreen: boolean,
+	hoveringImage: any
 }
 
-const PostCard = ({ post, hoverController, isLargeScreen }: Props) => {
-	const { title, description, tags, datePosted, slug } = post;
+const PostCard = ({ post, hoverController, isLargeScreen, hoveringImage }: Props) => {
+	
+	const { title, description, tags, datePosted, slug, featuredImage } = post;
+	const imageUrl = urlFor(featuredImage);
 	
   return (
-    <div className="w-full relative z-0">
+    <div className="w-full relative z-0"
+	>
+		{ !isLargeScreen &&
+			<div className="relative rounded-2xl overflow-hidden aspect-video flex my-5">	
+				<motion.img src={imageUrl} alt="" className="rounded-xl w-full object-cover" layoutId={imageUrl}/>
+			</div>
+		}
+
 		{/* Tags */}
 		<div className="flex gap-3 text-[#999999]">
 			<span>
@@ -39,10 +50,9 @@ const PostCard = ({ post, hoverController, isLargeScreen }: Props) => {
 					<span								
 						onMouseEnter={() => {
 							if (post.featuredImage) {
-								hoverController(urlFor(post.featuredImage))
+								hoverController(imageUrl)
 							}
 						}}
-						onMouseLeave={() => {hoverController(null)}}
 					>
 						{title}
 					</span>
@@ -59,8 +69,7 @@ const PostCard = ({ post, hoverController, isLargeScreen }: Props) => {
 		<p className="font-extralight text-sm sm:text-base">
 			{description}
 		</p>
-
-	</div>
+</div>
   )
 }
 

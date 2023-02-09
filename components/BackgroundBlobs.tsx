@@ -2,10 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 
 type Props = {
-	isHoverImage: boolean
 }
 
-const BackgroundBlobs = ({ isHoverImage }: Props) => {
+const BackgroundBlobs = ({  }: Props) => {
   return (
     <div className="w-full max-w-[530px] h-[500px] relative opacity-80">
 		{/* Blob 1 red orange */}

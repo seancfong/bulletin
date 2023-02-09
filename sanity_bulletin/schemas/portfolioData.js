@@ -16,7 +16,8 @@ export default {
         {
             'name': 'description',
             'title': 'Description',
-            'type': 'text'
+            'type': 'array',
+            'of': [{type: 'block'}]
         },
         {
             'name': 'priority',
@@ -24,8 +25,23 @@ export default {
             'type': 'number'
         },
         {
+            'name': 'isFeatured',
+            'title': 'Featured',
+            'type': 'boolean'
+        },
+        {
             'name': 'githubLink',
             'title': 'Github Link',
+            'type': 'string'
+        },
+        {
+            'name': 'award',
+            'title': 'Award',
+            'type': 'award'
+        },
+        {
+            'name': 'deploymentLink',
+            'title': 'Deployment Link',
             'type': 'string'
         },
         {

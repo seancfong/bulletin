@@ -25,10 +25,19 @@ type Props = {
 
 // Use custom image component to get URL from CMS
 const ptComponents = {
+	list: {
+		bullet: ({children}: any) => <ul className="mt-xl">{children}</ul>,
+		number: ({children}: any) => <ol className="mt-lg">{children}</ol>,
+	},
+	listItem: {
+		// Ex. 1: customizing common list types
+		bullet: ({children}: any) => <li style={{listStyleType: 'disclosure-closed'}}>{children}</li>,
+		number: ({children}: any) => <li style={{listStyleType: 'disclosure-closed'}}>{children}</li>,
+	},
 	block: {
-		h1: ({children}: any) => <h1 className="text-5xl">{children}</h1>,
-		h2: ({children}: any) => <h2 className="text-4xl">{children}</h2>,
-		h3: ({children}: any) => <h3 className="text-3xl">{children}</h3>,
+		h1: ({children}: any) => <h1 className="text-5xl mt-5">{children}</h1>,
+		h2: ({children}: any) => <h2 className="text-4xl mt-5">{children}</h2>,
+		h3: ({children}: any) => <h3 className="text-3xl mt-5 text-gray-800">{children}</h3>,
 	},
   types: {
     image: ({ value }: any) => {
@@ -69,6 +78,8 @@ const PostDetails = ({ post, slug }: Props) => {
 		featuredImage,
 		content
 	} = post ?? {};
+
+	const imageUrl = urlFor(featuredImage);
 	
   return (
     <div className="w-full h-full min-h-screen bg-[#eeeeee] font-primary">	
@@ -107,7 +118,7 @@ const PostDetails = ({ post, slug }: Props) => {
 					{/* Featured Image */}
 					<div className="flex justify-center basis-[60%]">
 						<div className="aspect-square w-full max-w-2xl h-full rounded-xl">
-							<motion.img src={urlFor(featuredImage)} alt={title ?? "Featured Image"} className="h-full w-full object-cover rounded-xl" width={1024} height={1024}
+							<motion.img src={imageUrl} alt={title ?? "Featured Image"} className="h-full w-full object-cover rounded-xl" width={1024} height={1024}
 							whileHover={{ scale: 1.01, transition: { duration: 0.8, ease: "easeOut" } }}
 							transition={{ duration: 0.5, ease: "easeOut" }} layoutId="hoverImage"/>
 						</div>
@@ -124,7 +135,7 @@ const PostDetails = ({ post, slug }: Props) => {
 
 				{/* Bottom half */}
 				{/* Content */}
-				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[50vw] flex flex-col gap-2 text-lg">
+				<div className="max-w-5xl w-[90vw] md:w-[70vw] lg:w-[50vw] flex flex-col gap-2 text-lg leading-9 text-gray-500">
 					<PortableText 
 						value={content}
 						components={ptComponents}
@@ -146,7 +157,7 @@ export const getStaticPaths = async () => {
 
 	return {
     paths: paths.map((slug: any) => ({params: {slug}})),
-    fallback: true,
+    fallback: false,
   }
 }
 

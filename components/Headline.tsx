@@ -30,18 +30,17 @@ const Headline = ({ posts }: Props) => {
 		
     <div className="w-full h-full flex flex-col lg:flex-row justify-between relative z-0">
 			{/* left side: bulletin title */}
-			<div className="h-[50vh] lg:h-screen lg:w-1/2 bg-opacity-[20%] sticky top-0 left-0 overflow-hidden">
+			<div className="h-[50vh] z-0 lg:h-screen lg:w-1/2 bg-opacity-[20%] sticky top-0 left-0 overflow-hidden">
 				{/* Blobs in background */}
 				<div className="absolute h-full w-full flex flex-col justify-center items-center -z-10">
-					<BackgroundBlobs isHoverImage={hoveringImage ? true : false}/>
+					<BackgroundBlobs/>
 				</div>
 
 				{/* Title content */}
-				<div className="absolute top-0 left-0 h-full w-full bg-[#eeeeee] backdrop-blur-sm bg-opacity-50">
+				<div className="absolute top-0 left-0 h-full w-full bg-[#eeeeee] backdrop-blur-sm z-0 bg-opacity-50">
 					<div className="absolute top-0 left-0 headerTexture w-full h-full"/>
 					{/* Background for hovering so image is more visible */}		
-					<div className={`w-full h-full bg-gradient-to-r from-[rgba(255,214,80,0.2)] to-[rgba(67,173,206,0.01)] absolute top-0 left-0
-						transition duration-[2000ms] ` + (hoveringImage ? "opacity-100" : "opacity-0")}/>
+					<div className={`w-full h-full bg-gradient-to-r from-[rgba(255,214,80,0.2)] to-[rgba(67,173,206,0.01)] absolute top-0 left-0 transition duration-[2000ms] ` + (hoveringImage ? "opacity-100" : "opacity-0")}/>
 
 					<div className="w-full h-full flex items-center justify-center relative">
 						<motion.div className="flex flex-col translate-y-10" layout="position" transition={{delay: 0.5, duration: 2}}>
@@ -50,11 +49,30 @@ const Headline = ({ posts }: Props) => {
 
 							{ !hoveringImage && (
 								<motion.span className="self-end" layout="position" layoutId="headline-arrow"
-								transition={{delay: 1, type: 'spring', stiffness: 50}}>
+								transition={{delay: 0.5, type: 'spring', stiffness: 50}}>
 									<RxArrowTopRight className="text-7xl sm:text-8xl lg:text-9xl"/> 
 								</motion.span>
 							)}
+							
 						</motion.div>
+						<AnimatePresence>
+								{ hoveringImage && 
+									<div className={"absolute w-[50vw] lg:w-[30vw] max-w-[50vh] lg:top-[10vw] right-[5vw] " + (!renderOnLarge && "top-10")}>
+										<div className="w-full aspect-square">
+											<motion.img src={hoveringImage} alt="IMAGE" layoutId="hoverImage"
+											initial={{x: 200, opacity: 0, scale: 0.8}} animate={{x: 0, opacity: 1, scale: 1, transition: {duration: 0.8, type: 'spring', stiffness: 50}}} 
+											exit={{ x: 20, opacity: 0, scale: 0.8, transition: {delay: 0.5, duration: 1, ease: "easeInOut"}}}
+											className="w-full h-full object-cover rounded-xl"/>
+										</div>
+								
+										<motion.span layout="position" layoutId="headline-arrow" className="absolute top-[60%] left-[-8vw]" 
+										animate={{rotate: 30}} transition={{type: 'spring', stiffness: 50}}
+										>
+											<RxArrowTopRight className="text-7xl sm:text-8xl lg:text-9xl"/>
+										</motion.span>
+									</div>
+								}				
+							</AnimatePresence>
 					</div>
 
 				</div>
@@ -65,28 +83,8 @@ const Headline = ({ posts }: Props) => {
 				
 			{/* right side: posts scroll */}
 		
-			<div className="lg:w-1/2 z-10">			
-				<PostList isLargeScreen={renderOnLarge} posts={posts} hoverController={setHoveringImage}/>
-				
-				{/* Hover image effect */}
-				<AnimatePresence>
-					{ hoveringImage && 
-						<div className={"fixed w-[50vw] lg:w-[30vw] lg:top-[10vw] left-[10vw] " + (!renderOnLarge && "top-10")}>
-							<div className="w-full aspect-square">
-								<motion.img src={hoveringImage} alt="IMAGE" layoutId="hoverImage" 
-								initial={{x: -200, opacity: 0, scale: 0.8}} animate={{x: 0, opacity: 1, scale: 1, transition: {duration: 0.8, type: 'spring', stiffness: 50}}} 
-								exit={{ x: 20, opacity: 0, scale: 0.8, transition: {delay: 1, duration: 1, ease: "easeInOut"}}}
-								className="w-full h-full object-cover rounded-xl"/>
-							</div>
-					
-							<motion.span layout="position" layoutId="headline-arrow" className="absolute top-[60%] right-[90%]" 
-							animate={{rotate: 30}} transition={{type: 'spring', stiffness: 50}}
-							>
-								<RxArrowTopRight className="text-7xl sm:text-8xl lg:text-9xl"/>
-							</motion.span>
-						</div>
-					}				
-				</AnimatePresence>
+			<div className="lg:w-1/2 z-10 relative">			
+				<PostList isLargeScreen={renderOnLarge} posts={posts} hoverController={setHoveringImage} hoveringImage={hoveringImage}/>
 				
 			</div>
 			
