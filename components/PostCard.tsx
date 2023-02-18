@@ -6,10 +6,9 @@ import IPost from "./types/PostInterface";
 
 type Props = {
   post: IPost;
-  isLargeScreen: boolean;
 };
 
-const PostCard = ({ post, isLargeScreen }: Props) => {
+const PostCard = ({ post }: Props) => {
   const cardRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -17,18 +16,13 @@ const PostCard = ({ post, isLargeScreen }: Props) => {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0.35, 0.75, 1], [-30, 130, 0], {
+  const y = useTransform(scrollYProgress, [0.35, 0.75, 1], [-30, 170, 0], {
     ease: easeInOut,
   });
 
-  const textY = useTransform(
-    scrollYProgress,
-    [0, 0.55, 0.8, 1],
-    [50, 0, 0, -100],
-    {
-      ease: easeInOut,
-    }
-  );
+  const textY = useTransform(scrollYProgress, [0, 1], [20, -50], {
+    ease: easeInOut,
+  });
 
   const { title, description, tags, datePosted, slug, featuredImage } = post;
   const imageUrl = urlFor(featuredImage) ?? "placeholder.png";

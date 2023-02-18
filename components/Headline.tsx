@@ -11,6 +11,7 @@ import {
   AnimatePresence,
   easeInOut,
   motion,
+  MotionValue,
   useMotionValueEvent,
   useScroll,
   useSpring,
@@ -19,36 +20,38 @@ import {
 
 type Props = {
   posts: Array<IPost>;
+  scrollY: MotionValue<number>;
 };
 
-const Headline = ({ posts }: Props) => {
+const Headline = ({ posts, scrollY }: Props) => {
   const windowSize = useWindowSize();
   const [renderOnLarge, setRenderOnLarge] = useState(true);
-
-  const [blurBlob, setBlurBlob] = useState(false);
-
-  const { scrollY } = useScroll();
 
   const boxY = useTransform(scrollY, [0, 1500], [0, 100], { ease: easeInOut });
   const boxScale = useTransform(scrollY, [0, 1000], [1, 1.5], {
     ease: easeInOut,
   });
-  const blobX = useTransform(scrollY, [400, 1000], [0, -270], {
-    ease: easeInOut,
-  });
-  const blobScale = useTransform(scrollY, [200, 1200], [1, 1.4], {
+  const blobX = useTransform(
+    useSpring(scrollY, { damping: 30, stiffness: 100 }),
+    [400, 1000],
+    [0, -270],
+    {
+      ease: easeInOut,
+    }
+  );
+  const blobScale = useTransform(
+    useSpring(scrollY, { stiffness: 20, damping: 10 }),
+    [200, 1200],
+    [1, 1.4],
+    {
+      ease: easeInOut,
+    }
+  );
+  const blobOpacity = useTransform(scrollY, [200, 1200], [0.95, 0.6], {
     ease: easeInOut,
   });
   const blobRotate = useTransform(scrollY, [700, 900], [0, 3], {
     ease: easeInOut,
-  });
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (scrollY.get() > 700 && blurBlob == false) {
-      setBlurBlob(true);
-    } else if (scrollY.get() <= 700 && blurBlob == true) {
-      setBlurBlob(false);
-    }
   });
 
   useEffect(() => {
@@ -64,14 +67,12 @@ const Headline = ({ posts }: Props) => {
       <div className="font-primary w-full h-screen flex flex-col justify-center items-center relative">
         <div className="w-[20rem] h-[20rem] sm:w-[33rem] sm:h-[33rem] relative flex justify-center items-center">
           <motion.div
-            className={
-              "w-full h-full fixed flex justify-center items-center opacity-80 pointer-events-none " +
-              (blurBlob && "blur-[2px]")
-            }
+            className="w-full h-full fixed flex justify-center items-center pointer-events-none"
             style={{
               x: renderOnLarge ? blobX : 0,
               scale: blobScale,
               rotate: blobRotate,
+              opacity: blobOpacity,
             }}
           >
             <BackgroundBlobs />
@@ -97,7 +98,7 @@ const Headline = ({ posts }: Props) => {
 
       {/* Post list */}
       <div className="relative">
-        <PostList posts={posts} isLargeScreen={renderOnLarge} />
+        <PostList posts={posts} />
       </div>
     </div>
   );

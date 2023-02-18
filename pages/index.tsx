@@ -1,3 +1,4 @@
+import { useMotionValueEvent, useScroll } from "framer-motion";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Footer from "../components/Footer";
@@ -17,6 +18,9 @@ type Props = {
 };
 
 const Home = ({ posts }: Props) => {
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {});
   return (
     <div className="w-full h-full flex flex-col bg-[#eeeeee] font-primary overflow-x-hidden scroll-smooth">
       <Head>
@@ -24,7 +28,7 @@ const Home = ({ posts }: Props) => {
       </Head>
 
       {/* <IndexLinks /> */}
-      <Headline posts={posts} />
+      <Headline posts={posts} scrollY={scrollY} />
 
       <div className="h-screen flex justify-center items-center">
         <span className="font-extralight text-4xl text-center">
