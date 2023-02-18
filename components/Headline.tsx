@@ -72,7 +72,7 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
       <div className=" headerTexture w-full h-full fixed" />
 
       {/* Header */}
-      <div className="font-primary w-full h-screen flex flex-col justify-center items-center relative">
+      <div className="z-0 font-primary w-full h-screen flex flex-col justify-center items-center relative">
         <div className="w-[20rem] h-[20rem] sm:w-[33rem] sm:h-[33rem] relative flex justify-center items-center">
           <motion.div
             className="w-full h-full fixed flex justify-center items-center pointer-events-none"
@@ -88,6 +88,9 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
 
           {/* Border box */}
           <motion.div
+            initial={{ scale: 0.85 }}
+            animate={{ scale: 1 }}
+            transition={{ ease: "easeInOut", duration: 1 }}
             className="border-gray-500 border-[3px] w-full h-full absolute bg-[#eeeeee] bg-opacity-20"
             style={{ y: boxY, scale: boxScale }}
           />
@@ -119,13 +122,27 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
             </AnimatePresence>
 
             {/* Title */}
-            <div className="text-right pb-5">
-              <h2 className="font-extralight text-5xl sm:text-7xl">
-                the bulletin
-              </h2>
-              <h3 className="font-extralight text-2xl sm:text-4xl">
-                forward thinking
-              </h3>
+            <div className="text-right flex flex-col items-end">
+              <div className="overflow-hidden w-fit">
+                <motion.h2
+                  initial={{ y: 100, rotate: -5 }}
+                  animate={{ y: 0, rotate: 0 }}
+                  transition={{ type: "spring", damping: 22, stiffness: 50 }}
+                  className="font-extralight text-5xl sm:text-7xl"
+                >
+                  the bulletin
+                </motion.h2>
+              </div>
+              <div className="overflow-hidden w-fit pl-5 pb-5">
+                <motion.h3
+                  initial={{ x: -300 }}
+                  animate={{ x: 0 }}
+                  transition={{ type: "spring", damping: 20, stiffness: 50 }}
+                  className="font-extralight text-2xl sm:text-4xl"
+                >
+                  forward thinking
+                </motion.h3>
+              </div>
             </div>
           </div>
         </div>
