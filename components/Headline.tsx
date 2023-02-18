@@ -88,9 +88,9 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
 
           {/* Border box */}
           <motion.div
-            initial={{ scale: 0.85 }}
-            animate={{ scale: 1 }}
-            transition={{ ease: "easeInOut", duration: 1 }}
+            initial={{ scale: 0.85, opacity: 0.6 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ ease: [0.52, 0.12, 0.16, 1], duration: 1.5 }}
             className="border-gray-500 border-[3px] w-full h-full absolute bg-[#eeeeee] bg-opacity-20"
             style={{ y: boxY, scale: boxScale }}
           />
@@ -127,7 +127,12 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
                 <motion.h2
                   initial={{ y: 100, rotate: -5 }}
                   animate={{ y: 0, rotate: 0 }}
-                  transition={{ type: "spring", damping: 22, stiffness: 50 }}
+                  transition={{
+                    type: "spring",
+                    damping: 22,
+                    stiffness: 50,
+                    delay: 0.2,
+                  }}
                   className="font-extralight text-5xl sm:text-7xl"
                 >
                   the bulletin
@@ -137,7 +142,12 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
                 <motion.h3
                   initial={{ x: -300 }}
                   animate={{ x: 0 }}
-                  transition={{ type: "spring", damping: 20, stiffness: 50 }}
+                  transition={{
+                    type: "spring",
+                    damping: 20,
+                    stiffness: 50,
+                    delay: 0.5,
+                  }}
                   className="font-extralight text-2xl sm:text-4xl"
                 >
                   forward thinking
