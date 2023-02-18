@@ -9,6 +9,8 @@ export default defineConfig({
   name: 'default',
   title: 'bulletin',
 
+  basePath: '/studio',
+
   projectId: 'l4wrpsh5',
   dataset: 'production',
 
