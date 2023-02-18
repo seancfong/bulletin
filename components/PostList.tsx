@@ -4,9 +4,10 @@ import IPost from "./types/PostInterface";
 
 type Props = {
   posts: Array<IPost>;
+  isLargeScreen: boolean;
 };
 
-const PostList = ({ posts }: Props) => {
+const PostList = ({ posts, isLargeScreen }: Props) => {
   const sampleData = [
     {
       title: "Embarking on a journey - the process of creating the bulletin",
@@ -39,7 +40,7 @@ const PostList = ({ posts }: Props) => {
         {posts.map((post, index) => {
           return (
             <div key={index} className="w-full min-h-[40rem]">
-              <PostCard post={post} />
+              <PostCard post={post} isLargeScreen={isLargeScreen} />
             </div>
           );
         })}

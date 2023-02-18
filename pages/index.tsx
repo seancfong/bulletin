@@ -1,6 +1,7 @@
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Headline from "../components/Headline";
 import IndexLinks from "../components/IndexLinks";
@@ -17,18 +18,31 @@ type Props = {
   posts: Array<Post>;
 };
 
+const NAVBAR_BREAKPOINT = 200;
+
 const Home = ({ posts }: Props) => {
   const { scrollY } = useScroll();
+  const [navbarVertical, setNavbarVertical] = useState(true);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {});
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > NAVBAR_BREAKPOINT && navbarVertical === true) {
+      setNavbarVertical(false);
+    } else if (latest < NAVBAR_BREAKPOINT && navbarVertical === false) {
+      setNavbarVertical(true);
+    }
+  });
   return (
     <div className="w-full h-full flex flex-col bg-[#eeeeee] font-primary overflow-x-hidden scroll-smooth">
       <Head>
         <title>Bulletin | seancfong</title>
       </Head>
 
-      {/* <IndexLinks /> */}
-      <Headline posts={posts} scrollY={scrollY} />
+      <IndexLinks isVisible={!navbarVertical} />
+      <Headline
+        posts={posts}
+        scrollY={scrollY}
+        navbarVertical={navbarVertical}
+      />
 
       <div className="h-screen flex justify-center items-center">
         <span className="font-extralight text-4xl text-center">

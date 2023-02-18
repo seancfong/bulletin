@@ -6,7 +6,7 @@ import PostList from "./PostList";
 
 import useWindowSize from "./hooks/useWindowSize";
 import IPost from "./types/PostInterface";
-import { RxArrowTopRight } from "react-icons/rx";
+import { BsSquare, BsSquareFill } from "react-icons/bs";
 import {
   AnimatePresence,
   easeInOut,
@@ -17,13 +17,15 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import Link from "next/link";
 
 type Props = {
   posts: Array<IPost>;
   scrollY: MotionValue<number>;
+  navbarVertical: boolean;
 };
 
-const Headline = ({ posts, scrollY }: Props) => {
+const Headline = ({ posts, scrollY, navbarVertical }: Props) => {
   const windowSize = useWindowSize();
   const [renderOnLarge, setRenderOnLarge] = useState(true);
 
@@ -85,20 +87,46 @@ const Headline = ({ posts, scrollY }: Props) => {
           />
 
           {/* Title box */}
-          <div className="absolute bottom-10 right-5 text-right w-full h-full flex flex-col justify-end">
-            <h2 className="font-extralight text-5xl sm:text-7xl">
-              the bulletin
-            </h2>
-            <h3 className="font-extralight text-2xl sm:text-4xl">
-              forward thinking
-            </h3>
+          <div className="absolute w-full h-full flex flex-col justify-end p-5">
+            {/* Sample nav */}
+            <AnimatePresence>
+              {navbarVertical && (
+                <motion.div
+                  className="text-xl absolute top-5 right-full translate-x-[-2rem] origin-top-right -rotate-90 flex gap-10 justify-between font-light tracking-wider text-gray-500"
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span>
+                    <Link href="https://www.seancfong.com/">seancfong</Link>
+                  </span>
+                  <span>
+                    <Link href="">archive</Link>
+                  </span>
+                  <span>
+                    <Link href="">home</Link>
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Title */}
+            <div className="text-right pb-5">
+              <h2 className="font-extralight text-5xl sm:text-7xl">
+                the bulletin
+              </h2>
+              <h3 className="font-extralight text-2xl sm:text-4xl">
+                forward thinking
+              </h3>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Post list */}
       <div className="relative">
-        <PostList posts={posts} />
+        <PostList posts={posts} isLargeScreen={renderOnLarge} />
       </div>
     </div>
   );

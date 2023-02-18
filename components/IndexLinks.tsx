@@ -1,18 +1,37 @@
-import Link from 'next/link'
-import React from 'react'
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import React from "react";
 
-type Props = {}
+type Props = {
+  isVisible: boolean;
+};
 
-const IndexLinks = (props: Props) => {
+const IndexLinks = ({ isVisible = true }: Props) => {
   return (
-    <div className="fixed top-0 left-0 z-50 px-16 pt-5 w-full flex justify-center lg:justify-start">
-        <Link href="https://seancfong.com">
-            <span className="font-primary font-light text-xl">
-                seancfong
-            </span>   
-        </Link>
+    <div className="flex justify-center">
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            className="fixed w-full flex flex-row-reverse justify-end bg-gradient-to-b from-[#eeeeee] to-transparent h-20 z-50 font-light tracking-wider text-xl text-gray-500 gap-10 items-center px-20 max-w-[1920px]"
+            initial={{ y: -50 }}
+            animate={{ y: 0 }}
+            exit={{ y: -50 }}
+            transition={{ type: "spring", damping: 10, stiffness: 40 }}
+          >
+            <span>
+              <Link href="https://www.seancfong.com/">seancfong</Link>
+            </span>
+            <span>
+              <Link href="">archive</Link>
+            </span>
+            <span>
+              <Link href="">the bulletin</Link>
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  )
-}
+  );
+};
 
-export default IndexLinks
+export default IndexLinks;

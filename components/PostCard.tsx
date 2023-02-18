@@ -6,9 +6,10 @@ import IPost from "./types/PostInterface";
 
 type Props = {
   post: IPost;
+  isLargeScreen: boolean;
 };
 
-const PostCard = ({ post }: Props) => {
+const PostCard = ({ post, isLargeScreen }: Props) => {
   const cardRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -44,7 +45,7 @@ const PostCard = ({ post }: Props) => {
 
         <motion.div
           className="flex flex-col justify-center w-full pr-10 py-3 px-5 gap-2"
-          style={{ y: textY }}
+          style={{ y: isLargeScreen ? textY : 0 }}
         >
           <div className="flex gap-3 text-[#999999]">
             <span>{datePosted}</span>
