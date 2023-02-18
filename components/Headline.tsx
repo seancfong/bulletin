@@ -23,12 +23,10 @@ type Props = {
   posts: Array<IPost>;
   scrollY: MotionValue<number>;
   navbarVertical: boolean;
+  renderOnLarge: boolean;
 };
 
-const Headline = ({ posts, scrollY, navbarVertical }: Props) => {
-  const windowSize = useWindowSize();
-  const [renderOnLarge, setRenderOnLarge] = useState(true);
-
+const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
   const boxY = useTransform(scrollY, [0, 1500], [0, 100], { ease: easeInOut });
   const boxScale = useTransform(scrollY, [0, 1000], [1, 1.5], {
     ease: easeInOut,
@@ -55,10 +53,6 @@ const Headline = ({ posts, scrollY, navbarVertical }: Props) => {
   const blobRotate = useTransform(scrollY, [700, 900], [0, 3], {
     ease: easeInOut,
   });
-
-  useEffect(() => {
-    if (windowSize.width) return setRenderOnLarge(windowSize.width >= 1024);
-  }, [windowSize.width]);
 
   return (
     <div className="h-full relative w-full flex flex-col gap-96">
@@ -92,7 +86,7 @@ const Headline = ({ posts, scrollY, navbarVertical }: Props) => {
             <AnimatePresence>
               {navbarVertical && (
                 <motion.div
-                  className="text-xl absolute top-5 right-full translate-x-[-2rem] origin-top-right -rotate-90 flex gap-10 justify-between font-light tracking-wider text-gray-500"
+                  className="hidden text-xl absolute top-5 right-full translate-x-[-2rem] origin-top-right -rotate-90 sm:flex gap-10 justify-between font-light tracking-wider text-gray-500"
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

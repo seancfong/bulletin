@@ -36,7 +36,7 @@ const PostList = ({ posts, isLargeScreen }: Props) => {
   return (
     <div className="w-full flex flex-col items-center">
       {/* Post Card Content */}
-      <div className="w-full h-full flex flex-col gap-[15rem] items-center px-8 sm:px-16 lg:px-0 max-w-xl lg:max-w-5xl">
+      <div className="w-full h-full flex flex-col gap-[15rem] items-center px-8 sm:px-10 lg:px-0 max-w-md sm:max-w-xl lg:max-w-5xl">
         {posts.map((post, index) => {
           return (
             <div key={index} className="w-full min-h-[40rem]">

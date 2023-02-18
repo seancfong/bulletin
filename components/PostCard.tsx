@@ -62,11 +62,13 @@ const PostCard = ({ post, isLargeScreen }: Props) => {
             })}
           </div>
           <Link href={slug?.current ? `posts/${slug?.current}` : ""}>
-            <h2 className="text-4xl font-light transition-all hover:text-sky-700 duration-300">
+            <h2 className="text-3xl sm:text-4xl font-light transition-all hover:text-sky-700 duration-300">
               {title}
             </h2>
           </Link>
-          <p className="font-light text-lg text-gray-600">{description}</p>
+          <p className="font-light text-normal sm:text-lg text-gray-600">
+            {description}
+          </p>
         </motion.div>
       </div>
     </motion.div>

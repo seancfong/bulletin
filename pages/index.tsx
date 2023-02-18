@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Headline from "../components/Headline";
+import useWindowSize from "../components/hooks/useWindowSize";
 import IndexLinks from "../components/IndexLinks";
 
 // Sanity client
@@ -24,6 +25,9 @@ const Home = ({ posts }: Props) => {
   const { scrollY } = useScroll();
   const [navbarVertical, setNavbarVertical] = useState(true);
 
+  const windowSize = useWindowSize();
+  const [renderOnLarge, setRenderOnLarge] = useState(true);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > NAVBAR_BREAKPOINT && navbarVertical === true) {
       setNavbarVertical(false);
@@ -31,17 +35,25 @@ const Home = ({ posts }: Props) => {
       setNavbarVertical(true);
     }
   });
+
+  useEffect(() => {
+    if (windowSize.width) return setRenderOnLarge(windowSize.width >= 1024);
+  }, [windowSize.width]);
+
   return (
     <div className="w-full h-full flex flex-col bg-[#eeeeee] font-primary overflow-x-hidden scroll-smooth">
       <Head>
         <title>Bulletin | seancfong</title>
       </Head>
 
-      <IndexLinks isVisible={!navbarVertical} />
+      <IndexLinks
+        isVisible={!navbarVertical && (windowSize.width ?? 0) > 768}
+      />
       <Headline
         posts={posts}
         scrollY={scrollY}
         navbarVertical={navbarVertical}
+        renderOnLarge={renderOnLarge}
       />
 
       <div className="h-screen flex justify-center items-center">
