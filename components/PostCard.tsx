@@ -35,7 +35,7 @@ const PostCard = ({ post, isLargeScreen }: Props) => {
       style={{ y }}
     >
       <div className="flex flex-col items-center lg:flex-row h-full w-full gap-5 bg-[#eeeeee] bg-opacity-60 lg:bg-opacity-30">
-        <div className="aspect-square w-full shadow-lg">
+        <div className="aspect-square w-full">
           <img
             src={imageUrl}
             alt={title}

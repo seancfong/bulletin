@@ -47,16 +47,28 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
       ease: easeInOut,
     }
   );
-  const blobOpacity = useTransform(scrollY, [200, 1200], [0.95, 0.6], {
+  const blobOpacity = useTransform(scrollY, [200, 1200], [1, 0.6], {
     ease: easeInOut,
   });
   const blobRotate = useTransform(scrollY, [700, 900], [0, 3], {
+    ease: easeInOut,
+  });
+  const navX = useTransform(scrollY, [0, 500], [-35, -100], {
+    ease: easeInOut,
+  });
+  const bgImgOpacity = useTransform(scrollY, [0, 900], [0.6, 0.3], {
     ease: easeInOut,
   });
 
   return (
     <div className="h-full relative w-full flex flex-col gap-96">
       {/* Fixed background texture */}
+      <motion.div
+        className=" w-full h-full fixed "
+        style={{ opacity: bgImgOpacity }}
+      >
+        <div className=" bg-[url('/texture-bg.jpg')] bg-cover w-full h-full shadow-[inset_0_0px_150px_80px] shadow-zinc-200" />
+      </motion.div>
       <div className=" headerTexture w-full h-full fixed" />
 
       {/* Header */}
@@ -86,11 +98,12 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
             <AnimatePresence>
               {navbarVertical && (
                 <motion.div
-                  className="hidden text-xl absolute top-5 right-full translate-x-[-2rem] origin-top-right -rotate-90 sm:flex gap-10 justify-between font-light tracking-wider text-gray-500"
+                  className="hidden text-lg absolute top-5 right-full origin-top-right sm:flex gap-10 justify-between font-light tracking-wider text-gray-600"
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
+                  style={{ x: navX, rotate: -90 }}
                 >
                   <span>
                     <Link href="https://www.seancfong.com/">seancfong</Link>
