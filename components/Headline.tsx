@@ -102,9 +102,13 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
               {navbarVertical && (
                 <motion.div
                   className="hidden text-lg absolute top-5 right-full origin-top-right sm:flex gap-10 justify-between font-light tracking-wider text-gray-600"
-                  initial={{ opacity: 1 }}
+                  initial={{ opacity: 0, x: 0 }}
                   exit={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{
+                    opacity: 1,
+                    x: -35,
+                    transition: { ease: "easeInOut", duration: 0.8 },
+                  }}
                   transition={{ duration: 0.5 }}
                   style={{ x: navX, rotate: -90 }}
                 >
