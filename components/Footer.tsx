@@ -8,7 +8,7 @@ const Footer = (props: Props) => {
       <span className="font-light">The Bulletin</span>
       <span className="font-light">&copy; 2023 Sean Collan Fong</span>
       <a
-        className="font-light"
+        className="font-extralight text-gray-400"
         href="https://www.vecteezy.com/free-vector/website"
       >
         Website Vectors by Vecteezy

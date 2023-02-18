@@ -2,6 +2,7 @@ import { useMotionValueEvent, useScroll } from "framer-motion";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { BsPencilSquare } from "react-icons/bs";
 import Footer from "../components/Footer";
 import Headline from "../components/Headline";
 import useWindowSize from "../components/hooks/useWindowSize";
@@ -56,10 +57,19 @@ const Home = ({ posts }: Props) => {
         renderOnLarge={renderOnLarge}
       />
 
-      <div className="h-screen flex justify-center items-center">
-        <span className="font-extralight text-4xl text-center">
-          New Posts <br /> on the way!
-        </span>
+      <div className="h-screen flex justify-center items-center font-extralight relative z-0">
+        <div className="flex flex-col gap-5 items-start bg-[#eeeeee] bg-opacity-50 p-10 md:p-32 shadow-lg rounded-lg">
+          <span className="text-4xl sm:text-5xl text-center">Forthcoming:</span>
+          <ul className="list-inside list-disc text-lg lg:text-2xl">
+            <li>
+              <BsPencilSquare className="inline-block" />
+              &nbsp;phenomenal: using AI for assets
+            </li>
+            <li>irvinesweeper: pulling off a stunt</li>
+            <li>bulletin: redesigning a blog</li>
+            <li>zotology: collective envisionment</li>
+          </ul>
+        </div>
       </div>
 
       <Footer />
