@@ -1,74 +1,102 @@
+import {BsImage, BsPersonVideo2, BsChatSquareQuote, BsPinFill} from 'react-icons/bs'
+
 export default {
-    name: 'post',
-    type: 'document',
-    title: 'Post',
-    fields: [
+  title: 'Bulletin',
+  icon: BsPinFill,
+  name: 'post',
+  type: 'document',
+  fields: [
+    {
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+    },
+    {
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 90,
+      },
+    },
+    {
+      name: 'isFeatured',
+      title: 'Featured?',
+      type: 'boolean',
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+    },
+    {
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [
         {
-            name: 'title',
-            title: 'Title',
-            type: 'string',
+          type: 'tag',
+        },
+      ],
+    },
+    {
+      name: 'datePosted',
+      title: 'Date Posted',
+      type: 'date',
+      options: {
+        dateFormat: 'MM/DD/YY',
+      },
+    },
+    {
+      name: 'featuredImage',
+      title: 'Featured Image',
+      type: 'image',
+      options: {hotspot: true},
+    },
+    {
+      title: 'Content',
+      name: 'content',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          title: 'Block',
         },
         {
-            title: 'Slug',
-            name: 'slug',
-            type: 'slug',
-            options: {
-                source: 'title',
-                maxLength: 90,
-            }
+          type: 'image',
+          title: 'Image',
+          icon: BsImage,
+          options: {hotspot: true},
+          fields: [
+            {
+              title: 'Caption',
+              name: 'caption',
+              type: 'string',
+            },
+          ],
         },
         {
-            name: 'isFeatured',
-            title: 'Featured?',
-            type: 'boolean',
+          name: 'videoAnimation',
+          title: 'Video',
+          type: 'videoAnimation',
+          icon: BsPersonVideo2,
         },
         {
-            name: 'description',
-            title: 'Description',
-            type: 'text',
+          title: 'Code',
+          type: 'code',
         },
         {
-            name: 'tags',
-            title: 'Tags',
-            type: 'array',
-            of: [{
-                type: 'tag'
-            }]
+          title: 'Gap',
+          type: 'linegap',
         },
         {
-            name: 'datePosted',
-            title: 'Date Posted',
-            type: 'date',
-            options: {
-                dateFormat: 'MM/DD/YY'
-            }
+          title: 'Quote',
+          name: 'quote',
+          type: 'quote',
+          icon: BsChatSquareQuote,
         },
-        {
-            name: 'featuredImage',
-            title: 'Featured Image',
-            type: 'image',
-            options: {hotspot: true}
-        },
-        {
-            title: 'Content', 
-            name: 'content',
-            type: 'array', 
-            of: [
-                {
-                    type: 'block',
-                    title: 'Block',
-                },
-                {
-                    type: 'image',
-                    title: 'Image',
-                    options: {hotspot: true}
-                },
-                {
-                    title: 'Code input',
-                    type: 'code'
-                }
-            ]
-        },
-        
-    ]
+      ],
+    },
+  ],
 }

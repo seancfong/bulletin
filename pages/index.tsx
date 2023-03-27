@@ -63,11 +63,10 @@ const Home = ({ posts }: Props) => {
           <ul className="list-inside list-disc text-lg lg:text-2xl">
             <li>
               <BsPencilSquare className="inline-block" />
-              &nbsp;phenomenal: using AI for assets
+              &nbsp;irvinesweeper: pulling off a stunt
             </li>
-            <li>irvinesweeper: pulling off a stunt</li>
             <li>bulletin: redesigning a blog</li>
-            <li>zotology: collective envisionment</li>
+            <li>phenomenal: using AI for assets</li>
           </ul>
         </div>
       </div>
@@ -80,7 +79,7 @@ const Home = ({ posts }: Props) => {
 export default Home;
 
 export const getStaticProps = async () => {
-  const postQuery = `*[_type == 'post' && !(_id in path("drafts.**")) && isFeatured == true][0..9] {
+  const postQuery = `*[_type == 'post' && !(_id in path("drafts.**")) && isFeatured == true] | order(datePosted desc) [0..9] {
 		_id, _createdAt, title, description, tags, datePosted, slug, featuredImage, 
 	}`;
   const posts = await client.fetch(postQuery);
