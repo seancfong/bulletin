@@ -137,6 +137,13 @@ const PostDetails = ({ post, slug }: Props) => {
     <div className="w-full h-full min-h-screen bg-[#eeeeee] font-primary relative z-0">
       <Head>
         <title>{title ?? ""}</title>
+        <meta
+          name="description"
+          content={description ?? "by Sean Collan Fong"}
+        />
+        <meta property="og:title" content={title ?? ""} />
+        <meta property="og:description" content={description ?? ""} />
+        <meta property="og:image" content={imageUrl ?? ""} />
       </Head>
       {/* Navbar */}
       <div className="h-[6rem] lg:block">
