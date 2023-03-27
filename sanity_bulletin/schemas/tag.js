@@ -6,6 +6,7 @@ export default {
 		list: [
 			{ title: 'Web Development', value: 'webdev' },
 			{ title: 'Portfolio', value: 'portfolio' },
+			{ title: 'Hackathon', value: 'hackathon' },
 		],
 	},
 	

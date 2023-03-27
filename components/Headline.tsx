@@ -27,7 +27,9 @@ type Props = {
 };
 
 const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
-  const boxY = useTransform(scrollY, [0, 1500], [0, 100], { ease: easeInOut });
+  const boxY = useTransform(scrollY, [0, 500, 1500], [0, 150, 100], {
+    ease: easeInOut,
+  });
   const boxScale = useTransform(scrollY, [0, 1000], [1, 1.5], {
     ease: easeInOut,
   });
@@ -47,12 +49,6 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
       ease: easeInOut,
     }
   );
-  const blobOpacity = useTransform(scrollY, [200, 1200], [1, 0.6], {
-    ease: easeInOut,
-  });
-  const blobRotate = useTransform(scrollY, [700, 900], [0, 3], {
-    ease: easeInOut,
-  });
   const navX = useTransform(scrollY, [0, 500], [-35, -100], {
     ease: easeInOut,
   });
@@ -67,7 +63,7 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
         className=" w-full h-full fixed "
         style={{ opacity: bgImgOpacity }}
       >
-        <div className=" bg-[url('/texture-bg.jpg')] bg-cover w-full h-full shadow-[inset_0_0px_150px_80px] shadow-zinc-200" />
+        <div className=" bg-[url('/texture-bg.jpg')] bg-cover w-full h-full shadow-[inset_0_0px_150px_80px] dark:shadow-none shadow-zinc-200 dark:opacity-50" />
       </motion.div>
       <div className=" headerTexture w-full h-full fixed" />
 
@@ -79,8 +75,7 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
             style={{
               x: renderOnLarge ? blobX : 0,
               scale: blobScale,
-              rotate: blobRotate,
-              opacity: blobOpacity,
+              // opacity: blobOpacity,
             }}
           >
             <BackgroundBlobs />
@@ -101,7 +96,7 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
             <AnimatePresence>
               {navbarVertical && (
                 <motion.div
-                  className="hidden text-lg absolute top-5 right-full origin-top-right sm:flex gap-10 justify-between font-light tracking-wider text-gray-600"
+                  className="hidden text-lg absolute top-5 right-full origin-top-right sm:flex gap-10 justify-between font-light font-manrope tracking-wider text-gray-600"
                   initial={{ opacity: 0, x: 0 }}
                   exit={{ opacity: 0 }}
                   animate={{
@@ -137,7 +132,7 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
                     stiffness: 50,
                     delay: 0.2,
                   }}
-                  className="font-extralight text-5xl sm:text-7xl"
+                  className="font-extralight text-5xl sm:text-7xl font-manrope"
                 >
                   the bulletin
                 </motion.h2>
@@ -152,7 +147,7 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
                     stiffness: 50,
                     delay: 0.5,
                   }}
-                  className="font-extralight text-2xl sm:text-4xl"
+                  className="font-extralight text-2xl sm:text-4xl font-manrope"
                 >
                   forward thinking
                 </motion.h3>
@@ -163,9 +158,12 @@ const Headline = ({ posts, scrollY, navbarVertical, renderOnLarge }: Props) => {
       </div>
 
       {/* Post list */}
-      <div className="relative">
+      <motion.div
+        className="relative"
+        // style={{ scale: postScale }}
+      >
         <PostList posts={posts} isLargeScreen={renderOnLarge} />
-      </div>
+      </motion.div>
     </div>
   );
 };

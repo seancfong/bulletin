@@ -39,7 +39,7 @@ const PostCard = ({ post, isLargeScreen }: Props) => {
           <img
             src={imageUrl}
             alt={title}
-            className="object-cover w-full h-full rounded-lg"
+            className="object-cover w-full h-full rounded-xl"
           />
         </div>
 
@@ -62,7 +62,7 @@ const PostCard = ({ post, isLargeScreen }: Props) => {
             })}
           </div>
           <Link href={slug?.current ? `posts/${slug?.current}` : ""}>
-            <h2 className="text-3xl sm:text-4xl font-light transition-all hover:text-sky-700 duration-300">
+            <h2 className="text-3xl sm:text-4xl font-normal text-slate-500 font-manrope hover:text-sky-700">
               {title}
             </h2>
           </Link>
